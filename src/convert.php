@@ -7,7 +7,7 @@ namespace Converter;
 
 // TODO: check formats
 
-list ($dumb, $fromFile, $toFile, ) = $argv;
+list ($dumb , $fromFile, $toFile, ) = $argv;
 
 $fromType = substr($fromFile, strrpos($fromFile, '.') + 1);
 $fromType = $fromType === 'yaml' ? 'yml' : $fromType;
