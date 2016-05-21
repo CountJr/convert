@@ -1,0 +1,19 @@
+{
+  "name": "CountJr/convert",
+  "description": "Config files converter",
+  "license": "MIT",
+  "keywords": ["convert"],
+  "authors": [
+    {
+      "name": "CountJr",
+      "email": "countjr@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*",
+    "squizlabs/php_codesniffer": "2.*"
+  }
+}
