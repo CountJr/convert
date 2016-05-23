@@ -1,7 +1,7 @@
 <?php
 namespace Decoder;
 
-function parse($text)
-{
-    return $text;
-}
+return function ($text)
+    {
+        return $text;
+    };

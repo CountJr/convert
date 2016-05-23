@@ -3,25 +3,43 @@
 namespace Converter;
 
 
-//$formats = ['xml', 'yml', 'json'];
+$formats = ['xml', 'yml', 'json'];
 
 // TODO: check formats
+if (3 !== count($argv) || !preg_match('/^\w+\.\w{3,4}$/i', trim($argv[1])) || !preg_match('/^\w+\.\w{3,4}$/i', $argv[2])) {
+    die("invalid arguments");
+} else {
+    array_shift($argv);
+    list ($fromFile, $toFile, ) = $argv;
+}
 
-list ($dumb , $fromFile, $toFile, ) = $argv;
 
 $fromType = substr($fromFile, strrpos($fromFile, '.') + 1);
 $fromType = $fromType === 'yaml' ? 'yml' : $fromType;
+if (!in_array($fromType, $formats)){
+    die("unsupported input format");
+}
 
 $toType = substr($toFile, strrpos($toFile, '.') + 1);
 $toType = $toType === 'yaml' ? 'yml' : $toType;
 $toFileName = substr($toFile, 0, strrpos($toFile, '.'));
+if (!in_array($toType, $formats)){
+    die("unsupported output format");
+}
 
-require_once ($fromType . 'Decode.php');
-require_once ($toType . 'Encode.php');
+$fromFunc = require_once ($fromType . 'Decode.php');
+$toFunc = require_once ($toType . 'Encode.php');
 
-$contens = file_get_contents($fromFile);
-$tmp1 = \Decoder\parse($contens);
-//print_r($tmp1);
-$tmp2 = \Encoder\encode($tmp1);
-//print_r($tmp2);
-file_put_contents($toFileName . '.' . $toType, $tmp2);
+try {
+    $inputString = file_get_contents($fromFile);
+} catch (\Exception $e) {
+    die("can't open input file");
+}
+
+try {
+    file_put_contents($toFileName . '.' . $toType, 
+        $toFunc($fromFunc($inputString)));
+} catch (\Exception $e) {
+    die("can't save to file");
+}
+exit(0);
