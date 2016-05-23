@@ -1,7 +1,6 @@
 <?php
 namespace Converter;
 
-
 $formats = ['xml', 'yml', 'json'];
 
 // input files must be "file.ext" only

@@ -1,7 +1,6 @@
 <?php
 namespace Decoder;
 
-return function ($text)
-    {
+return function ($text) {
         return $text;
-    };
+};
