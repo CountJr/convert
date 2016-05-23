@@ -1,8 +1,7 @@
 <?php
 namespace Encoder;
 
-return function ($json)
-    {
+return function ($json) {
         return $json;
-    };
+};
 
