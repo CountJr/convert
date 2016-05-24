@@ -23,4 +23,4 @@ function encode($json)
     $xml_data = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8"?><data></data>');
     $array_to_xml($arr, $xml_data);
     return $xml_data->asXML();
-};
+}

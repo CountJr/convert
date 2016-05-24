@@ -11,4 +11,4 @@ function decode($text)
         }
     }
     return json_encode($array, JSON_UNESCAPED_UNICODE);
-};
+}
