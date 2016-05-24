@@ -1,7 +1,7 @@
 <?php
 namespace Converter\Xml\Decode;
 
-function decode($text) 
+function decode($text)
 {
     $xml   = simplexml_load_string($text, 'SimpleXMLElement', LIBXML_NOCDATA);
     $array = json_decode(json_encode($xml), true);
