@@ -3,11 +3,33 @@ namespace Converter;
 
 function convert($inputFile, $inputFormat, $outputFile, $outputFormat)
 {
-    $inFunc = '\Converter\\' . ucfirst($inputFormat) . '\\Decode\\decode';
-    $outFunc = '\Converter\\' . ucfirst($inputFormat) . '\\Encode\\encode';
-    if(!function_exists($inFunc) || !function_exists($outFunc)) {
-        return false;
+    $text = file_get_contents($inputFile);
+    switch ($inputFormat) {
+        case "json":
+            $tmpin = \Converter\Json\Decode\decode($text);
+            break;
+        case "xml":
+            $tmpin = \Converter\Xml\Decode\decode($text);
+            break;
+        case "yml":
+            $tmpin = \Converter\Yml\Decode\decode($text);
+            break;
+        default:
+            return false;
     }
-    file_put_contents($outputFile, $outFunc($inFunc(file_get_contents($inputFile))));
+    switch ($outputFormat) {
+        case "json":
+            $tmpout = \Converter\Json\Encode\encode($tmpin);
+            break;
+        case "xml":
+            $tmpout = \Converter\Xml\Encode\encode($tmpin);
+            break;
+        case "yml":
+            $tmpout = \Converter\Yml\Encode\encode($tmpin);
+            break;
+        default:
+            return false;
+    }
+    file_put_contents($outputFile, $tmpout);
     return true;
 }
