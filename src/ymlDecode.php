@@ -1,6 +1,6 @@
 <?php
-namespace Decoder;
+namespace Converter\Yml\Decode;
 
-return function ($text) {
+function decode ($text) {
         return json_encode(yaml_parse($text), JSON_UNESCAPED_UNICODE);
 };

@@ -1,6 +1,6 @@
 <?php
-namespace Encoder;
+namespace Converter\Yml\Encode;
 
-return function ($json) {
+function encode ($json) {
         return yaml_emit(json_decode($json, true), YAML_UTF8_ENCODING);
 };

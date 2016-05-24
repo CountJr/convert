@@ -1,8 +1,13 @@
 <?php
-namespace Decoder;
+namespace Converter\Xml\Decode;
 
-return function ($text) {
-        $xml   = simplexml_load_string($text, 'SimpleXMLElement', LIBXML_NOCDATA);
-        $array = json_decode(json_encode($xml), true);
-        return json_encode($array, JSON_UNESCAPED_UNICODE);
+function decode ($text) {
+    $xml   = simplexml_load_string($text, 'SimpleXMLElement', LIBXML_NOCDATA);
+    $array = json_decode(json_encode($xml), true);
+    foreach ($array as $key => $value) {
+        if ((string)(int)$value === $value) {
+            $array[$key] = (int)$value;
+        }
+    }
+    return json_encode($array, JSON_UNESCAPED_UNICODE);
 };

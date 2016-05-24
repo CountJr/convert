@@ -3,15 +3,11 @@ namespace Converter;
 
 function convert($inputFile, $inputFormat, $outputFile, $outputFormat)
 {
-    $decodeFile = __DIR__ . DIRECTORY_SEPARATOR . 'decoders' . DIRECTORY_SEPARATOR . $inputFormat . 'Decode.php';
-    $encodeFile = __DIR__ . DIRECTORY_SEPARATOR . 'encoders' . DIRECTORY_SEPARATOR . $outputFormat . 'Encode.php';
-    if (!file_exists($decodeFile) || !file_exists($encodeFile)) {
+    $inFunc = '\Converter\\' . ucfirst($inputFormat) . '\\Decode\\decode';
+    $outFunc = '\Converter\\' . ucfirst($inputFormat) . '\\Encode\\encode';
+    if(!function_exists($inFunc) || !function_exists($outFunc)) {
         return false;
-    } else {
-        $decodeFunc = require_once $decodeFile;
-        $encodeFunc = require_once $encodeFile;
-        $tmp = $decodeFunc(file_get_contents($inputFile));
-        file_put_contents($outputFile, $encodeFunc($tmp));
     }
+    file_put_contents($outputFile, $outFunc($inFunc(file_get_contents($inputFile))));
     return true;
 }

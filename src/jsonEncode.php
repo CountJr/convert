@@ -1,6 +1,7 @@
 <?php
-namespace Encoder;
+namespace Converter\Json\Encode;
 
-return function ($json) {
-        return $json;
-};
+function encode($json)
+{
+    return $json;
+}

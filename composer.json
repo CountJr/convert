@@ -17,9 +17,13 @@
     "squizlabs/php_codesniffer": "2.*"
   },
   "autoload": {
-    "psr-0": {
-      "": "src/"
-    },
-    "files": ["src/convert.php"]
+    "files": ["src/convert.php",
+              "src/jsonDecode.php",
+              "src/jsonEncode.php",
+              "src/xmlDecode.php",
+              "src/xmlEncode.php",
+              "src/ymlDecode.php",
+              "src/ymlEncode.php"
+    ]
   }
 }
