@@ -15,5 +15,11 @@
   "require-dev": {
     "phpunit/phpunit": "*",
     "squizlabs/php_codesniffer": "2.*"
+  },
+  "autoload": {
+    "psr-0": {
+      "": "src/"
+    },
+    "files": ["src/convert.php"]
   }
 }

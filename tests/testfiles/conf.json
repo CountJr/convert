@@ -1,0 +1,1 @@
+{"application":{"name":"configuration","secret":"s3cr3t"},"host":"localhost","port":80,"servers":{"server1":"host1","server2":"host2","server3":"host3"}}

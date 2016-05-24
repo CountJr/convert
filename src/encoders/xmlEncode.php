@@ -1,16 +1,19 @@
 <?php
-namespace Converter\Encoders;
+namespace App;
 
 return function ($json) {
     $array_to_xml = function ($data, &$xml_data) use (&$array_to_xml) {
-        foreach ($data as $key => $value) {
-            if (is_array($value)) {
-                if (is_numeric($key)) {
-                    $key = 'item' . $key; //dealing with <0/>..<n/> issues
+        foreach($data as $key => $value) {
+            if(is_array($value)) {
+                if(is_numeric($key)){
+                    $key = 'item'.$key; //dealing with <0/>..<n/> issues
                 }
                 $subnode = $xml_data->addChild($key);
                 $array_to_xml($value, $subnode);
             } else {
+                if( is_numeric($key) ){
+                    $key = 'item'.$key; //dealing with <0/>..<n/> issues
+                }
                 $xml_data->addChild("$key", $value);
             }
         }
