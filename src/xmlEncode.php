@@ -1,7 +1,8 @@
 <?php
 namespace Converter\Xml\Encode;
 
-function encode ($json) {
+function encode($json)
+{
     $array_to_xml = function ($data, &$xml_data) use (&$array_to_xml) {
         foreach ($data as $key => $value) {
             if (is_array($value)) {

@@ -1,6 +1,7 @@
 <?php
 namespace Converter\Json\Decode;
 
-function decode ($text) {
+function decode($text)
+{
         return $text;
 };
