@@ -1,33 +1,19 @@
 <?php
 namespace Converter;
 
-$formats = ['xml', 'yml', 'json'];
-
-// input files must be "file.ext" only
-if (3 !== count($argv)
-        || !preg_match('/^\w+\.\w{3,4}$/i', trim($argv[1]))
-        || !preg_match('/^\w+\.\w{3,4}$/i', $argv[2])) {
-    die("invalid arguments");
-} else {
-    array_shift($argv);
-    list ($fromFile, $toFile, ) = $argv;
+function convert($inputFile, $inputFormat, $outputFile, $outputFormat)
+{
+    echo "lalalal\n";
+    return true;
 }
-
-$fromType = substr($fromFile, strrpos($fromFile, '.') + 1);
-$fromType = $fromType === 'yaml' ? 'yml' : $fromType;
-if (!in_array($fromType, $formats)) {
-    die("unsupported input format");
-}
-
-$toType = substr($toFile, strrpos($toFile, '.') + 1);
-$toType = $toType === 'yaml' ? 'yml' : $toType;
-$toFileName = substr($toFile, 0, strrpos($toFile, '.'));
-if (!in_array($toType, $formats)) {
-    die("unsupported output format");
-}
-
+/*
 $fromFunc = require_once($fromType . 'Decode.php');
 $toFunc = require_once($toType . 'Encode.php');
+
+
+
+
+
 
 try {
     $inputString = file_get_contents($fromFile);
@@ -40,4 +26,4 @@ try {
 } catch (\Exception $e) {
     die("can't save to file");
 }
-exit(0);
+exit(0);*/

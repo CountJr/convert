@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+<?php
+namespace Convert;
+
+use function \Converter\convert as convert;
+
+require_once __DIR__ . '/vendor/autoload.php';
+
+$options = getopt("i:o:");
+if (!isset($options['i']) || !isset($options['o'])) {
+    echo 'missing parametrs. usage convert -i input.file -o output.file';
+    exit(1);
+}
+$fromType = substr($options['i'], strrpos($options['i'], '.') + 1);
+$toType = substr($options['o'], strrpos($options['o'], '.') + 1);
+if (!($fromType) || !($toType)) {
+    echo 'invalid file types';
+    exit(1);
+}
+
+//TODO: определить передачу с ошибкой и вывести ее.
+if (convert($options['i'], $fromType, $options['o'], $toType)) {
+    exit(0);
+} else {
+    exit(1);
+}
