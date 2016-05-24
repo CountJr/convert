@@ -6,7 +6,7 @@ function convert($inputFile, $inputFormat, $outputFile, $outputFormat)
     $text = file_get_contents($inputFile);
     switch ($inputFormat) {
         case "json":
-            $tmpin = \Converter\Json\Decode\decode($text);
+            $tmpin = $text;
             break;
         case "xml":
             $tmpin = \Converter\Xml\Decode\decode($text);
@@ -19,7 +19,7 @@ function convert($inputFile, $inputFormat, $outputFile, $outputFormat)
     }
     switch ($outputFormat) {
         case "json":
-            $tmpout = \Converter\Json\Encode\encode($tmpin);
+            $tmpout = $tmpin;
             break;
         case "xml":
             $tmpout = \Converter\Xml\Encode\encode($tmpin);
