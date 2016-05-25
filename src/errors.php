@@ -2,13 +2,6 @@
 /**
  *  Error handler
  *
- * PHP version 7
- *
- * @category None
- * @package  None
- * @author   me <me@somewhere.out>
- * @license  https://opensource.org/licenses/MIT MIT
- * @link     none
  */
 namespace Converter\Error;
 
