@@ -1,5 +1,7 @@
 # convert
 [![Build Status](https://travis-ci.org/CountJr/convert.svg?branch=master)](https://travis-ci.org/CountJr/convert)
+[![Coverage Status](https://coveralls.io/repos/github/CountJr/convert/badge.svg?branch=master)](https://coveralls.io/github/CountJr/convert?branch=master)
+
 
 ## Install
 
