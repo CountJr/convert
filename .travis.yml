@@ -2,8 +2,13 @@ language: php
 php:
   - '7.0'
 
+script:
+  
+
 install:
   - composer self-update
   - make install
 
-script: make lint
+script: 
+  - make lint
+  - bin/atoum --test-all
