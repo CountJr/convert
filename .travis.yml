@@ -2,9 +2,6 @@ language: php
 php:
   - '7.0'
 
-script:
-  
-
 install:
   - composer self-update
   - make install
