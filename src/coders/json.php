@@ -1,9 +1,9 @@
 <?php
 /**
  *  Json encode/decode
- * 
+ *
  * PHP version 7
- * 
+ *
  * @category None
  * @package  None
  * @author   me <me@somewhere.out>
@@ -16,7 +16,7 @@ namespace Converter\Json;
  * Json decode
  *
  * @param string $text input string
- *                      
+ *
  * @return array
  */
 function decode(string $text)
@@ -28,7 +28,7 @@ function decode(string $text)
  * Json encode
  *
  * @param array $arr input array
- *                    
+ *
  * @return string
  */
 function encode(array $arr)

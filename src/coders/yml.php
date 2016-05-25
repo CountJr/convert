@@ -16,9 +16,9 @@ use Symfony\Component\Yaml\Yaml;
 
 /**
  * YML(YAML) decode
- * 
+ *
  * @param string $text input string
- * 
+ *
  * @return mixed
  */
 function decode(string $text)
@@ -28,9 +28,9 @@ function decode(string $text)
 
 /**
  * YML(YAML) encode
- * 
+ *
  * @param array $arr input array
- * 
+ *
  * @return string
  */
 function encode(array $arr)

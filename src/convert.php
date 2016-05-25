@@ -19,7 +19,7 @@ use function \Converter\Error\error;
  *
  * @param string $inputFile  input file name
  * @param string $outputFile output file name
- * 
+ *
  * @return bool
  */
 function convert(string $inputFile, string $outputFile)
@@ -36,9 +36,9 @@ function convert(string $inputFile, string $outputFile)
 
 /**
  * Returns file format from extension
- * 
+ *
  * @param string $fileName full file name
- * 
+ *
  * @return string file format
  */
 function fileFormat(string $fileName)
@@ -52,53 +52,53 @@ function fileFormat(string $fileName)
 
 /**
  * Decodes from string to array
- * 
+ *
  * @param string $ext     file format
  * @param string $content file contents
- *                        
+ *
  * @return array array
  */
 function decode(string $ext, string $content)
 {
     switch ($ext) {
-    case "json":
-        return \Converter\Json\decode($content);
-    case "xml":
-        return \Converter\Xml\decode($content);
-    case "yml":
-        return \Converter\Yml\decode($content);
-    default:
-        error('unknown input format' . $ext);
+        case "json":
+            return \Converter\Json\decode($content);
+        case "xml":
+            return \Converter\Xml\decode($content);
+        case "yml":
+            return \Converter\Yml\decode($content);
+        default:
+            error('unknown input format' . $ext);
     }
 }
 
 /**
  * Returns encoded string from array
- * 
+ *
  * @param string $ext     file format
  * @param array  $content array
- *                         
+ *
  * @return string string
  */
 function encode(string $ext, array $content)
 {
     switch ($ext) {
-    case "json":
-        return \Converter\Json\encode($content);
-    case "xml":
-        return \Converter\Xml\encode($content);
-    case "yml":
-        return \Converter\Yml\encode($content);
-    default:
-        error('unknown output format' . $ext);
+        case "json":
+            return \Converter\Json\encode($content);
+        case "xml":
+            return \Converter\Xml\encode($content);
+        case "yml":
+            return \Converter\Yml\encode($content);
+        default:
+            error('unknown output format' . $ext);
     }
 }
 
 /**
  * Reading file
- * 
+ *
  * @param string $fileName file name of file to read
- *                         
+ *
  * @return string file contents
  */
 function fileRead(string $fileName)
@@ -111,10 +111,10 @@ function fileRead(string $fileName)
 
 /**
  * Write string to file
- * 
+ *
  * @param string $fileName file name
  * @param string $content  contents to write
- *                        
+ *
  * @return bool
  */
 function fileWrite(string $fileName, string $content)

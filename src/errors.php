@@ -14,7 +14,7 @@ namespace Converter\Error;
 
 /**
  * Error handler
- * 
+ *
  * @param string $text    error description
  * @param int    $errCode error code
  *
