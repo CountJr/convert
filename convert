@@ -1,26 +1,27 @@
 #!/usr/bin/env php
 <?php
+/**
+ *  Conversion settings files from one format to another
+ *
+ * PHP version 7
+ *
+ * @category None
+ * @package  None
+ * @author   me <me@somewhere.out>
+ * @license  https://opensource.org/licenses/MIT MIT
+ * @link     none
+ */
 namespace Convert;
 
-use function \Converter\convert as convert;
+use function \Converter\convert;
+use function \Converter\Error\error;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
 $options = getopt("i:o:");
 if (!isset($options['i']) || !isset($options['o'])) {
-    echo 'missing parametrs. usage convert -i input.file -o output.file';
-    exit(1);
-}
-$fromType = strtolower(substr($options['i'], strrpos($options['i'], '.') + 1));
-$toType = strtolower(substr($options['o'], strrpos($options['o'], '.') + 1));
-if (!($fromType) || !($toType)) {
-    echo 'invalid file types';
-    exit(1);
+    error('missing parameters. usage convert -i input.file -o output.file');
 }
 
-//TODO: определить передачу с ошибкой и вывести ее.
-if (convert($options['i'], $fromType, $options['o'], $toType)) {
-    exit(0);
-} else {
-    exit(1);
-}
+convert($options['i'], $options['o']);
+exit(0);

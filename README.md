@@ -3,7 +3,7 @@
 
 ## Install
 
-sudo git clone https://github.com/CountJr/convert
+git clone https://github.com/CountJr/convert
 
 ## Usage
 
@@ -12,4 +12,3 @@ sudo git clone https://github.com/CountJr/convert
 ## Requirements
 
 PHP 7.0
-Yaml extention
