@@ -23,5 +23,6 @@
               "src/coders/json.php",
               "src/errors.php"
     ]
-  }
+  },
+  "bin": ["bin/convert.php"]
 }
