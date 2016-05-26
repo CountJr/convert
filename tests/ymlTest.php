@@ -1,7 +1,7 @@
 <?php
 namespace Converter\Tests;
 
-class YmlDecodeTest extends \PHPUnit_Framework_Testcase
+class YmlDecodeTest extends \PHPUnit_Framework_TestCase
 {
     public function testYmlDecode()
     {
