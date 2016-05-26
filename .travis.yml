@@ -7,5 +7,4 @@ install:
   - make install
 
 script: 
-  - make lint
-  - bin/vendor/atoum --test-all
+  - make lint test
