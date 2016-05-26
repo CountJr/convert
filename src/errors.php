@@ -1,7 +1,6 @@
 <?php
 /**
  *  Error handler
- *
  */
 namespace Converter\Error;
 

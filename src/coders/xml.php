@@ -1,7 +1,6 @@
 <?php
 /**
  *  XML encode/decode
- *
  */
 namespace Converter\Xml;
 

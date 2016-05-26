@@ -1,7 +1,6 @@
 <?php
 /**
  *  Json encode/decode
- *
  */
 namespace Converter\Json;
 

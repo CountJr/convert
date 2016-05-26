@@ -1,7 +1,6 @@
 <?php
 /**
  *  Conversion function
- *
  */
 namespace Converter;
 
@@ -10,10 +9,9 @@ use function \Converter\Error\error;
 /**
  * Main function
  *
- * @param string $source input file name
- * @param string $target output file name
- * @param bool   $overwrite
- * 
+ * @param  string $source    input file name
+ * @param  string $target    output file name
+ * @param  bool   $overwrite
  * @return bool
  */
 function convert(string $source, string $target, bool $overwrite)
@@ -55,15 +53,15 @@ function fileFormat(string $fileName)
 function decode(string $ext, string $content)
 {
     switch ($ext) {
-        case "json":
-            return \Converter\Json\decode($content);
-        case "xml":
-            return \Converter\Xml\decode($content);
-        case "yml":
-        case "yaml":
-            return \Converter\Yml\decode($content);
-        default:
-            error('unknown input format' . $ext);
+    case "json":
+        return \Converter\Json\decode($content);
+    case "xml":
+        return \Converter\Xml\decode($content);
+    case "yml":
+    case "yaml":
+        return \Converter\Yml\decode($content);
+    default:
+        error('unknown input format' . $ext);
     }
 }
 
@@ -78,15 +76,15 @@ function decode(string $ext, string $content)
 function encode(string $ext, array $content)
 {
     switch ($ext) {
-        case "json":
-            return \Converter\Json\encode($content);
-        case "xml":
-            return \Converter\Xml\encode($content);
-        case "yml":
-        case "yaml":
-            return \Converter\Yml\encode($content);
-        default:
-            error('unknown output format' . $ext);
+    case "json":
+        return \Converter\Json\encode($content);
+    case "xml":
+        return \Converter\Xml\encode($content);
+    case "yml":
+    case "yaml":
+        return \Converter\Yml\encode($content);
+    default:
+        error('unknown output format' . $ext);
     }
 }
 
@@ -108,8 +106,8 @@ function fileRead(string $fileName)
 /**
  * Write string to file
  *
- * @param string $fileName file name
- * @param string $content  contents to write
+ * @param string $fileName  file name
+ * @param string $content   contents to write
  * @param bool   $overwrite can overwrite target file
  *
  * @return bool
