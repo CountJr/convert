@@ -5,7 +5,7 @@ autoload:
 	composer dump-autoload
 
 test:
-	composer exec phpunit --coverage-clover build/logs/clover.xml
+	composer exec phpunit -- --coverage-clover build/logs/clover.xml
 	composer exec test-reporter
 
 lint:
