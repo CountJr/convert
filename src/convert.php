@@ -10,20 +10,21 @@ use function \Converter\Error\error;
 /**
  * Main function
  *
- * @param string $inputFile  input file name
- * @param string $outputFile output file name
- *
+ * @param string $source input file name
+ * @param string $target output file name
+ * @param bool   $overwrite
+ * 
  * @return bool
  */
-function convert(string $inputFile, string $outputFile)
+function convert(string $source, string $target, bool $overwrite)
 {
-    $inputFormat = fileFormat($inputFile);
-    $inputContent = fileRead($inputFile);
-    $array = decode($inputFormat, $inputContent);
+    $sourceFormat = fileFormat($source);
+    $sourceContent = fileRead($source);
+    $array = decode($sourceFormat, $sourceContent);
 
-    $outputFormat = fileFormat($outputFile);
-    $result = encode($inputFormat, $array);
-    fileWrite($outputFile, $result);
+    $targetFormat = fileFormat($target);
+    $result = encode($targetFormat, $array);
+    fileWrite($target, $result, $overwrite);
     return true;
 }
 
@@ -36,11 +37,11 @@ function convert(string $inputFile, string $outputFile)
  */
 function fileFormat(string $fileName)
 {
-    $fileExt = strtolower(substr($fileName, strrpos($fileName, '.') + 1));
-    if (!$fileExt) {
+    $ext = pathinfo($fileName, PATHINFO_EXTENSION);
+    if (!$ext) {
         error('invalid file type');
     }
-    return $fileExt;
+    return $ext;
 }
 
 /**
@@ -59,6 +60,7 @@ function decode(string $ext, string $content)
         case "xml":
             return \Converter\Xml\decode($content);
         case "yml":
+        case "yaml":
             return \Converter\Yml\decode($content);
         default:
             error('unknown input format' . $ext);
@@ -81,6 +83,7 @@ function encode(string $ext, array $content)
         case "xml":
             return \Converter\Xml\encode($content);
         case "yml":
+        case "yaml":
             return \Converter\Yml\encode($content);
         default:
             error('unknown output format' . $ext);
@@ -88,7 +91,7 @@ function encode(string $ext, array $content)
 }
 
 /**
- * Reading file
+ * Read file
  *
  * @param string $fileName file name of file to read
  *
@@ -107,11 +110,15 @@ function fileRead(string $fileName)
  *
  * @param string $fileName file name
  * @param string $content  contents to write
+ * @param bool   $overwrite can overwrite target file
  *
  * @return bool
  */
-function fileWrite(string $fileName, string $content)
+function fileWrite(string $fileName, string $content, bool $overwrite)
 {
+    if (!$overwrite && file_exists($fileName)) {
+        error('file exists and cannot be overwritten');
+    }
     file_put_contents($fileName, $content);
     return true;
 }

@@ -10,10 +10,10 @@ use function \Converter\Error\error;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$options = getopt("i:o:");
-if (!isset($options['i']) || !isset($options['o'])) {
+$options = getopt("s:t:o");
+if (!isset($options['s']) || !isset($options['t'])) {
     error('missing parameters. usage convert -i input.file -o output.file');
 }
 
-convert($options['i'], $options['o']);
+convert($options['s'], $options['t'], array_key_exists('o', $options));
 exit(0);

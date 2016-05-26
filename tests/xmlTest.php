@@ -1,7 +1,7 @@
 <?php
 namespace Converter\Tests;
 
-class xmlDecodeTest extends \PHPUnit_Framework_Testcase
+class XmlDecodeTest extends \PHPUnit_Framework_Testcase
 {
     public function testXmlDecode()
     {

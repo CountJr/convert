@@ -15,6 +15,5 @@ namespace Converter\Error;
  */
 function error(string $text, int $errCode = 1)
 {
-    echo $text . "\n";
-    exit($errCode);
+    throw new \Exception($text . ' with code ' . $errCode);
 }
