@@ -53,15 +53,15 @@ function fileFormat(string $fileName)
 function decode(string $ext, string $content)
 {
     switch ($ext) {
-    case "json":
-        return \Converter\Json\decode($content);
-    case "xml":
-        return \Converter\Xml\decode($content);
-    case "yml":
-    case "yaml":
-        return \Converter\Yml\decode($content);
-    default:
-        error('unknown input format' . $ext);
+        case "json":
+            return \Converter\Json\decode($content);
+        case "xml":
+            return \Converter\Xml\decode($content);
+        case "yml":
+        case "yaml":
+            return \Converter\Yml\decode($content);
+        default:
+            error('unknown input format' . $ext);
     }
 }
 
@@ -76,15 +76,15 @@ function decode(string $ext, string $content)
 function encode(string $ext, array $content)
 {
     switch ($ext) {
-    case "json":
-        return \Converter\Json\encode($content);
-    case "xml":
-        return \Converter\Xml\encode($content);
-    case "yml":
-    case "yaml":
-        return \Converter\Yml\encode($content);
-    default:
-        error('unknown output format' . $ext);
+        case "json":
+            return \Converter\Json\encode($content);
+        case "xml":
+            return \Converter\Xml\encode($content);
+        case "yml":
+        case "yaml":
+            return \Converter\Yml\encode($content);
+        default:
+            error('unknown output format' . $ext);
     }
 }
 

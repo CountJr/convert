@@ -9,4 +9,4 @@ test:
 	composer exec test-reporter
 
 lint:
-	composer exec 'phpcs --standard=PSR2 src'
+	composer exec 'phpcs --standard=PSR2 src bin'
