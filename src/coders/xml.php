@@ -42,9 +42,9 @@ function encode(array $arr)
             }
         }
     };
-    $xml_data = new \SimpleXMLElement(
+    $xmlData = new \SimpleXMLElement(
         '<?xml version="1.0" encoding="UTF-8"?><data></data>'
     );
-    $arrayToXml($arr, $xml_data);
-    return $xml_data->asXML();
+    $arrayToXml($arr, $xmlData);
+    return $xmlData->asXML();
 }
