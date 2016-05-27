@@ -32,19 +32,19 @@ function decode(string $text)
  */
 function encode(array $arr)
 {
-    $array_to_xml = function ($data, &$xml_data) use (&$array_to_xml) {
+    $arrayToXml = function ($data, &$xmlData) use (&$arrayToXml) {
         foreach ($data as $key => $value) {
             if (is_array($value)) {
-                $subnode = $xml_data->addChild($key);
-                $array_to_xml($value, $subnode);
+                $subnode = $xmlData->addChild($key);
+                $arrayToXml($value, $subnode);
             } else {
-                $xml_data->addChild("$key", $value);
+                $xmlData->addChild("$key", $value);
             }
         }
     };
     $xml_data = new \SimpleXMLElement(
         '<?xml version="1.0" encoding="UTF-8"?><data></data>'
     );
-    $array_to_xml($arr, $xml_data);
+    $arrayToXml($arr, $xml_data);
     return $xml_data->asXML();
 }
