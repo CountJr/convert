@@ -62,6 +62,7 @@ function decode(string $ext, string $content)
             return \Converter\Yml\decode($content);
     }
     error('unknown input format' . $ext);
+    return;
 }
 
 /**
@@ -84,6 +85,7 @@ function encode(string $ext, array $content)
             return \Converter\Yml\encode($content);
     }
     error('unknown output format' . $ext);
+    return;
 }
 
 /**
