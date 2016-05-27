@@ -61,8 +61,7 @@ function decode(string $ext, string $content)
         case "yaml":
             return \Converter\Yml\decode($content);
     }
-    error('unknown input format' . $ext);
-    return;
+    throw new \Exception('unknown input format' . $ext);
 }
 
 /**
@@ -84,8 +83,7 @@ function encode(string $ext, array $content)
         case "yaml":
             return \Converter\Yml\encode($content);
     }
-    error('unknown output format' . $ext);
-    return;
+    throw new \Exception('unknown input format' . $ext);
 }
 
 /**
