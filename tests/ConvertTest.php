@@ -18,7 +18,7 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
                       "server3" => "host3"]
     ];
 
-    protected function setUp ()
+    protected function setUp()
     {
         $this->rootfs = vfsStream::setup('temp');
         vfsStream::copyFromFileSystem('./tests/testfiles', $this->rootfs);
@@ -26,7 +26,8 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
 
     public function testConvert()
     {
-        \Converter\convert(vfsStream::url('temp') . DIRECTORY_SEPARATOR . 'conf.json', vfsStream::url('temp') . DIRECTORY_SEPARATOR . 'out.xml');
+        \Converter\convert(vfsStream::url('temp') . DIRECTORY_SEPARATOR . 'conf.json', vfsStream::url('temp')
+            . DIRECTORY_SEPARATOR . 'out.xml');
         $this->assertTrue($this->rootfs->hasChild('out.xml'));
     }
 

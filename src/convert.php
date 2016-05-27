@@ -14,7 +14,7 @@ use function \Converter\Error\error;
  * @param  bool   $overwrite
  * @return bool
  */
-function convert(string $source, string $target, bool $overwrite)
+function convert(string $source, string $target, bool $overwrite = false)
 {
     $sourceFormat = fileFormat($source);
     $sourceContent = fileRead($source);
