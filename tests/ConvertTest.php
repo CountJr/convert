@@ -104,7 +104,7 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
     public function testFileWriteFail2()
     {
         try {
-            \Converter\fileWrite(vfsStream::url('temp') . DIRECTORY_SEPARATOR . 'conf.json', 'bububu', true);
+            \Converter\fileWrite(vfsStream::url('temp') . DIRECTORY_SEPARATOR . 'conf.json', 'bububu', false);
         } catch (\Exception $e) {
             //
         }
