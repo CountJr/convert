@@ -12,7 +12,9 @@ git clone https://github.com/CountJr/convert
 
 ## Usage
 
-./convert -i input.file -o output.file
+./bin/convert -s input.file -t output.file[-o]
+
+    -o - overwrite target file if exists (optional)
 
 ## Requirements
 
