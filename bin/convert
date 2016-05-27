@@ -12,7 +12,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $options = getopt("s:t:o");
 if (!isset($options['s']) || !isset($options['t'])) {
-    error('missing parameters. usage convert -i input.file -o output.file');
+    fwrite(STDERR, 'missing parameters. usage convert -i input.file -o output.file' . PHP_EOL);
 }
 
 if(convert($options['s'], $options['t'], array_key_exists('o', $options)) === false) {
