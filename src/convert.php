@@ -17,12 +17,28 @@ use function \Converter\Error\error;
 function convert(string $source, string $target, bool $overwrite = false)
 {
     $sourceFormat = fileFormat($source);
+    if ($sourceFormat === false) {
+        return false;
+    }
     $sourceContent = fileRead($source);
+    if ($sourceContent === false) {
+        return false;
+    }
     $array = decode($sourceFormat, $sourceContent);
-
+    if ($array === false) {
+        return false;
+    }
     $targetFormat = fileFormat($target);
+    if ($targetFormat === false) {
+        return false;
+    }
     $result = encode($targetFormat, $array);
-    fileWrite($target, $result, $overwrite);
+    if ($result === false) {
+        return false;
+    }
+    if (fileWrite($target, $result, $overwrite) === false) {
+        return false;
+    }
     return true;
 }
 
@@ -37,7 +53,8 @@ function fileFormat(string $fileName)
 {
     $ext = pathinfo($fileName, PATHINFO_EXTENSION);
     if (!$ext) {
-        error('invalid file type');
+        fwrite(STDERR, 'file extension is missing' . PHP_EOL);
+        return false;
     }
     return $ext;
 }
@@ -61,7 +78,8 @@ function decode(string $ext, string $content)
         case "yaml":
             return \Converter\Yml\decode($content);
     }
-    throw new \Exception('unknown input format' . $ext);
+    fwrite(STDERR, 'unknown input format ' . $ext . PHP_EOL);
+    return false;
 }
 
 /**
@@ -83,7 +101,8 @@ function encode(string $ext, array $content)
         case "yaml":
             return \Converter\Yml\encode($content);
     }
-    throw new \Exception('unknown input format' . $ext);
+    fwrite(STDERR, 'unknown output format ' . $ext . PHP_EOL);
+    return false;
 }
 
 /**
@@ -96,7 +115,8 @@ function encode(string $ext, array $content)
 function fileRead(string $fileName)
 {
     if (!file_exists($fileName)) {
-        error('file not exists ' . $fileName);
+        fwrite(STDERR, 'file not exists ' . $fileName . PHP_EOL);
+        return false;
     }
     return file_get_contents($fileName);
 }
@@ -113,7 +133,8 @@ function fileRead(string $fileName)
 function fileWrite(string $fileName, string $content, bool $overwrite)
 {
     if (!$overwrite && file_exists($fileName)) {
-        error('file exists and cannot be overwritten');
+        fwrite(STDERR, 'file exists and cannot be overwritten');
+        return false;
     }
     file_put_contents($fileName, $content);
     return true;

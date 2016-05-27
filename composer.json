@@ -23,13 +23,12 @@
     "files": ["src/convert.php",
               "src/coders/xml.php",
               "src/coders/yml.php",
-              "src/coders/json.php",
-              "src/errors.php"
+              "src/coders/json.php"
     ]
   },
   "bin": ["bin/convert.php"],
   "scripts": {
-    "test": "vendor/bin/phpunit -v",
+    "test": "vendor/bin/phpunit",
     "beauty": "vendor/bin/phpcbf --standard=PSR2 src bin tests",
     "sniff": "vendor/bin/phpcs --standard=PSR2 src bin tests"
   }

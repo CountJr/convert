@@ -26,6 +26,8 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
 
     public function testConvert()
     {
+        $this->assertFalse(\Converter\convert('lalal', 'bububu'));
+        $this->assertFalse(\Converter\convert('lalal.sll', 'bububu'));
         \Converter\convert(vfsStream::url('temp') . DIRECTORY_SEPARATOR . 'conf.json', vfsStream::url('temp')
             . DIRECTORY_SEPARATOR . 'out.xml');
         $this->assertTrue($this->rootfs->hasChild('out.xml'));
@@ -56,57 +58,15 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function testDecodeFail()
+    public function testDecodeEncodeFail()
     {
-        try {
-            \Converter\decode('lala', 'bubu');
-        } catch (\Exception $e) {
-            //
-        }
-    }
-
-    public function testEncodeFail()
-    {
-        try {
-            \Converter\encode('lala', $this->arr);
-        } catch (\Exception $e) {
-            //
-        }
-    }
-
-    public function testFileExtensionFail()
-    {
-        try {
-            \Converter\fileFormat('lala');
-        } catch (\Exception $e) {
-            //
-        }
-    }
-
-    public function testFileReadFail()
-    {
-        try {
-            \Converter\fileRead('lala');
-        } catch (\Exception $e) {
-            //
-        }
+        $this->assertFalse(\Converter\decode('lala', 'bubu'));
+        $this->assertFalse(\Converter\encode('lala', $this->arr));
     }
     
     public function testFileWriteFail()
     {
-        try {
-            \Converter\fileWrite('lala', 'bububu', false);
-        } catch (\Exception $e) {
-            //
-        }
-    }
-
-    public function testFileWriteFail2()
-    {
-        try {
-            \Converter\fileWrite(vfsStream::url('temp') . DIRECTORY_SEPARATOR . 'conf.json', 'bububu', false);
-        } catch (\Exception $e) {
-            //
-        }
+        $this->assertFalse(\Converter\fileWrite(vfsStream::url('temp')
+            . DIRECTORY_SEPARATOR . 'conf.json', 'bububu', false));
     }
 }
