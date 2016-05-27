@@ -1,19 +1,34 @@
 <?php
+
 namespace Converter\Tests;
 
-class YmlDecodeTest extends \PHPUnit_Framework_TestCase
+class YmlTest extends \PHPUnit_Framework_TestCase
 {
+    protected $arr;
+    protected $ymlFile;
+    
+    protected function setUp()
+    {
+        $this->arr = [
+            "application" =>
+                ["name" => "configuration",
+                 "secret" => "s3cr3t"],
+            "host" => "localhost",
+            "port" => 80,
+            "servers" => ["server1" => "host1",
+                "server2" => "host2",
+                "server3" => "host3"]
+        ];
+        $this->ymlFile = file_get_contents(__DIR__ . '/testfiles/conf.yml');
+    }
+
     public function testYmlDecode()
     {
-        $jsonFile = file_get_contents(__DIR__ . '/testfiles/conf.json');
-        $ymlFile = file_get_contents(__DIR__ . '/testfiles/conf.yml');
-        $this->assertEquals($jsonFile, json_encode(\Converter\Yml\decode($ymlFile),JSON_UNESCAPED_UNICODE));
+        $this->assertEquals($this->arr, \Converter\Yml\decode($this->ymlFile));
     }
 
     public function testYmlEncode()
     {
-        $jsonFile = json_decode(file_get_contents(__DIR__ . '/testfiles/conf.json'), true);
-        $ymlFile = file_get_contents(__DIR__ . '/testfiles/conf.yml');
-        $this->assertEquals($ymlFile, \Converter\Yml\encode($jsonFile));
+        $this->assertEquals($this->ymlFile, \Converter\Yml\encode($this->arr));
     }
 }

@@ -2,10 +2,10 @@
 
 namespace Converter\Tests;
 
-class XmlTest extends \PHPUnit_Framework_TestCase
+class JsonTest extends \PHPUnit_Framework_TestCase
 {
     protected $arr;
-    protected $xmlFile;
+    protected $jsonFile;
 
     protected function setUp()
     {
@@ -19,16 +19,16 @@ class XmlTest extends \PHPUnit_Framework_TestCase
                           "server2" => "host2",
                           "server3" => "host3"]
         ];
-        $this->xmlFile = file_get_contents(__DIR__ . '/testfiles/conf.xml');
+        $this->jsonFile = file_get_contents(__DIR__ . '/testfiles/conf.json');
     }
     
-    public function testXmlDecode()
+    public function testJsonDecode()
     {
-        $this->assertEquals($this->arr, \Converter\Xml\decode($this->xmlFile));
+        $this->assertEquals($this->arr, \Converter\Json\decode($this->jsonFile));
     }
-    
-    public function testXmlEncode()
+
+    public function testJsonEncode()
     {
-        $this->assertEquals($this->xmlFile, \Converter\Xml\encode($this->arr));
+        $this->assertEquals($this->jsonFile, \Converter\Json\encode($this->arr));
     }
 }

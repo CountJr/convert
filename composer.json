@@ -28,8 +28,8 @@
   },
   "bin": ["bin/convert.php"],
   "scripts": {
-    "test": "vendor/bin/phpunit -- -v",
-    "beauty": "vendor/bin/phpcbf --standard=PSR2 src bin",
-    "sniff": "vendor/bin/phpcs --standard=PSR2 src bin"
+    "test": "vendor/bin/phpunit -v",
+    "beauty": "vendor/bin/phpcbf --standard=PSR2 src bin tests",
+    "sniff": "vendor/bin/phpcs --standard=PSR2 src bin tests"
   }
 }
