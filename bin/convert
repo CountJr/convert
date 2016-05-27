@@ -15,5 +15,7 @@ if (!isset($options['s']) || !isset($options['t'])) {
     error('missing parameters. usage convert -i input.file -o output.file');
 }
 
-convert($options['s'], $options['t'], array_key_exists('o', $options));
+if(convert($options['s'], $options['t'], array_key_exists('o', $options)) === false) {
+    exit(1);
+}
 exit(0);
