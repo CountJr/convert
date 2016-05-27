@@ -4,138 +4,103 @@
  */
 namespace Converter;
 
-use function \Converter\Error\error;
+use Functional as f;
+use Monad\Either;
 
 /**
- * Main function
- *
- * @param  string $source    input file name
- * @param  string $target    output file name
- * @param  bool   $overwrite
- * @return bool
+ * @param string $source
+ * @param string $target
+ * @param bool   $overwrite
+ * @return \FantasyLand\Monad
  */
 function convert(string $source, string $target, bool $overwrite = false)
 {
-    $sourceFormat = fileFormat($source);
-    if ($sourceFormat === false) {
-        return false;
-    }
-    $sourceContent = fileRead($source);
-    if ($sourceContent === false) {
-        return false;
-    }
-    $array = decode($sourceFormat, $sourceContent);
-    if ($array === false) {
-        return false;
-    }
-    $targetFormat = fileFormat($target);
-    if ($targetFormat === false) {
-        return false;
-    }
-    $result = encode($targetFormat, $array);
-    if ($result === false) {
-        return false;
-    }
-    if (fileWrite($target, $result, $overwrite) === false) {
-        return false;
-    }
-    return true;
+    $extension = fileFormat($source);
+    $contents = f\sequenceM($extension, fileRead($source));
+    $array = f\sequenceM($contents, decode($extension->extract(), $contents->extract()));
+    $extension = f\sequenceM($array, fileFormat($target));
+    $result = f\sequenceM($extension, encode(
+        $extension->extract(),
+        is_array($array->extract()) ? $array->extract() : []
+    ));
+    return f\sequenceM($result, fileWrite($target, $result->extract(), $overwrite));
 }
 
+
 /**
- * Returns file format from extension
- *
- * @param string $fileName full file name
- *
- * @return string file format
+ * @param string $fileName
+ * @return static
  */
 function fileFormat(string $fileName)
 {
-    $ext = pathinfo($fileName, PATHINFO_EXTENSION);
-    if (!$ext) {
-        fwrite(STDERR, 'file extension is missing' . PHP_EOL);
-        return false;
-    }
-    return $ext;
+    return pathinfo($fileName, PATHINFO_EXTENSION)
+        ? Either\Right::of(pathinfo($fileName, PATHINFO_EXTENSION))
+        : Either\Left::of('file extension is missing' . PHP_EOL);
 }
 
+
 /**
- * Decodes from string to array
- *
- * @param string $ext     file format
- * @param string $content file contents
- *
- * @return array array
+ * @param string $ext
+ * @param string $content
+ * @return static
  */
 function decode(string $ext, string $content)
 {
     switch ($ext) {
         case "json":
-            return \Converter\Json\decode($content);
+            return Either\Right::of(\Converter\Json\decode($content));
         case "xml":
-            return \Converter\Xml\decode($content);
+            return Either\Right::of(\Converter\Xml\decode($content));
         case "yml":
         case "yaml":
-            return \Converter\Yml\decode($content);
+            return Either\Right::of(\Converter\Yml\decode($content));
     }
-    fwrite(STDERR, 'unknown input format ' . $ext . PHP_EOL);
-    return false;
+    return Either\Left::of('unknown input format ' . $ext . PHP_EOL);
 }
 
+
 /**
- * Returns encoded string from array
- *
- * @param string $ext     file format
- * @param array  $content array
- *
- * @return string string
+ * @param string $ext
+ * @param array  $content
+ * @return static
  */
 function encode(string $ext, array $content)
 {
     switch ($ext) {
         case "json":
-            return \Converter\Json\encode($content);
+            return Either\Right::of(\Converter\Json\encode($content));
         case "xml":
-            return \Converter\Xml\encode($content);
+            return Either\Right::of(\Converter\Xml\encode($content));
         case "yml":
         case "yaml":
-            return \Converter\Yml\encode($content);
+            return Either\Right::of(\Converter\Yml\encode($content));
     }
-    fwrite(STDERR, 'unknown output format ' . $ext . PHP_EOL);
-    return false;
+    return Either\Left::of('unknown output format ' . $ext . PHP_EOL);
 }
 
+
 /**
- * Read file
- *
- * @param string $fileName file name of file to read
- *
- * @return string file contents
+ * @param $fileName
+ * @return static
  */
-function fileRead(string $fileName)
+function fileRead($fileName)
 {
-    if (!file_exists($fileName)) {
-        fwrite(STDERR, 'file not exists ' . $fileName . PHP_EOL);
-        return false;
-    }
-    return file_get_contents($fileName);
+    return file_exists($fileName)
+        ? Either\Right::of(file_get_contents($fileName))
+        : Either\Left::of("file {$fileName} does not exists" . PHP_EOL);
 }
 
+
 /**
- * Write string to file
- *
- * @param string $fileName  file name
- * @param string $content   contents to write
- * @param bool   $overwrite can overwrite target file
- *
- * @return bool
+ * @param string $fileName
+ * @param string $content
+ * @param bool   $overwrite
+ * @return static
  */
 function fileWrite(string $fileName, string $content, bool $overwrite)
 {
-    if (!$overwrite && file_exists($fileName)) {
-        fwrite(STDERR, 'file exists and cannot be overwritten');
-        return false;
-    }
-    file_put_contents($fileName, $content);
-    return true;
+    $return = !file_exists($fileName) || $overwrite ? file_put_contents($fileName, $content) : false;
+    return  $return !== false
+        ? Either\Right::of(true)
+        : Either\Left::of('write to file error' . PHP_EOL);
 }

@@ -3,6 +3,8 @@
 namespace Converter\Tests;
 
 use org\bovigo\vfs\vfsStream;
+use Functional as f;
+use Monad\Either;
 
 class ConvertTest extends \PHPUnit_Framework_TestCase
 {
@@ -26,8 +28,13 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
 
     public function testConvert()
     {
-        $this->assertFalse(\Converter\convert('lalal', 'bububu'));
-        $this->assertFalse(\Converter\convert('lalal.sll', 'bububu'));
+        $this->assertEquals('file extension is missing' . PHP_EOL, \Converter\convert('lalal', 'bububu')->extract());
+        $this->assertEquals(
+            'write to file error' . PHP_EOL,
+            \Converter\convert(vfsStream::url('temp')
+            . DIRECTORY_SEPARATOR . 'conf.json', vfsStream::url('temp')
+            . DIRECTORY_SEPARATOR . 'conf.json')->extract()
+        );
         \Converter\convert(vfsStream::url('temp') . DIRECTORY_SEPARATOR . 'conf.json', vfsStream::url('temp')
             . DIRECTORY_SEPARATOR . 'out.xml');
         $this->assertTrue($this->rootfs->hasChild('out.xml'));
@@ -35,7 +42,8 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
 
     public function testFileExtension()
     {
-        $this->assertEquals('xml', \Converter\fileFormat('lala.xml'));
+        $this->assertInstanceOf(Either\Right::class, \Converter\fileFormat('lala.xml'));
+        $this->assertInstanceOf(Either\Left::class, \Converter\fileFormat('lala'));
     }
 
     /**
@@ -44,8 +52,8 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
     public function testDecodeEncode($format, $file)
     {
         $fileContents = file_get_contents(vfsStream::url('temp') . DIRECTORY_SEPARATOR . $file);
-        $this->assertEquals($this->arr, \Converter\decode($format, $fileContents));
-        $this->assertEquals($fileContents, \Converter\encode($format, $this->arr));
+        $this->assertEquals($this->arr, \Converter\decode($format, $fileContents)->extract());
+        $this->assertEquals($fileContents, \Converter\encode($format, $this->arr)->extract());
     }
 
     public function decodeProvider()
@@ -60,13 +68,7 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
 
     public function testDecodeEncodeFail()
     {
-        $this->assertFalse(\Converter\decode('lala', 'bubu'));
-        $this->assertFalse(\Converter\encode('lala', $this->arr));
-    }
-    
-    public function testFileWriteFail()
-    {
-        $this->assertFalse(\Converter\fileWrite(vfsStream::url('temp')
-            . DIRECTORY_SEPARATOR . 'conf.json', 'bububu', false));
+        $this->assertInstanceOf(Either\Left::class, \Converter\decode('lala', 'bubu'));
+        $this->assertInstanceOf(Either\Left::class, \Converter\encode('lala', $this->arr));
     }
 }

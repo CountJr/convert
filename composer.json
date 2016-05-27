@@ -11,7 +11,8 @@
   ],
   "require": {
     "phpunit/phpunit": "5.3.4",
-    "php": ">=7.0.0"
+    "php": ">=7.0.0",
+    "widmogrod/php-functional": "^2.1"
   },
   "require-dev": {
     "phpunit/phpunit": "5.3.4",

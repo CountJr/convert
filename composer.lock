@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "bced334d093902bf0c61b234bfb1beb0",
-    "content-hash": "a2a8960163d3e7a8acef7ab51d7b393e",
+    "hash": "b65fef2ab82fb6dd89c59909d0840d39",
+    "content-hash": "7cdf5a51c313bf9062ed31116129c133",
     "packages": [
         {
             "name": "doctrine/instantiator",
@@ -1149,6 +1149,56 @@
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
             "time": "2016-03-04 07:55:57"
+        },
+        {
+            "name": "widmogrod/php-functional",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/widmogrod/php-functional.git",
+                "reference": "762cd841c6f4b7034f892d5bd38e8d7cea083378"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/widmogrod/php-functional/zipball/762cd841c6f4b7034f892d5bd38e8d7cea083378",
+                "reference": "762cd841c6f4b7034f892d5bd38e8d7cea083378",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Common": "src",
+                    "Monad": "src",
+                    "Helpful": "src",
+                    "FantasyLand": "src"
+                },
+                "files": [
+                    "src/Functional/functions.php",
+                    "src/Functional/predicates.php",
+                    "src/Functional/strings.php",
+                    "src/Monad/Either/functions.php",
+                    "src/Monad/Maybe/functions.php",
+                    "src/Monad/IO/functions.php",
+                    "src/Monad/IO/errors.php",
+                    "src/Monad/State/functions.php",
+                    "src/Monad/Control/functions.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Gabriel Habryn",
+                    "email": "widmogrod@gmail.com"
+                }
+            ],
+            "description": "Functors, Applicative and Monads are fascinating concept. Purpose of this library is to explore them in OOP PHP world.",
+            "time": "2015-11-22 20:34:16"
         }
     ],
     "packages-dev": [

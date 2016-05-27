@@ -6,16 +6,17 @@
 namespace Convert;
 
 use function \Converter\convert;
-use function \Converter\Error\error;
+use Monad\Either;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $options = getopt("s:t:o");
 if (!isset($options['s']) || !isset($options['t'])) {
-    fwrite(STDERR, 'missing parameters. usage convert -s input.file -t output.file [-o]' . PHP_EOL);
+    exit('missing parameters. usage convert -s input.file -t output.file [-o]' . PHP_EOL);
 }
 
-if(convert($options['s'], $options['t'], array_key_exists('o', $options)) === false) {
-    exit(1);
+$result = convert($options['s'], $options['t'], array_key_exists('o', $options));
+if($result instanceof Either\Left) {
+    exit($result->extract());
 }
 exit(0);
