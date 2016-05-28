@@ -35,7 +35,9 @@ class YmlCoderTest extends \PHPUnit_Framework_TestCase
 
     public function testXmlDecoderFail()
     {
-        $this->assertInstanceOf('Monad\Either\Left', 
-            \Converter\decode('yml', file_get_contents(vfsStream::url('temp/incorr.yml'))));
+        $this->assertInstanceOf(
+            'Monad\Either\Left',
+            \Converter\decode('yml', file_get_contents(vfsStream::url('temp/incorr.yml')))
+        );
     }
 }

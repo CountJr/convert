@@ -17,7 +17,7 @@ function decoders()
          */
         'json' => function (string $text) {
             $return = json_decode($text, true);
-            return !json_last_error() 
+            return !json_last_error()
                 ? Either\right($return)
                 : Either\left('incorect input file' . PHP_EOL);
         },
