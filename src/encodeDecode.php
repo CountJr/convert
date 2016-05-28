@@ -1,4 +1,5 @@
 <?php
+
 namespace Converter;
 
 use Functional;
@@ -8,13 +9,14 @@ use function Functional\curry;
 const DECODE = 'Converter\decode';
 
 /**
- * @param string $ext
- * @param string $content
- * @return static
+ * @param string $ext       format of file
+ * @param string $content   file's content
+ * @return \Monad\Either
  */
 function decode(string $ext, string $content)
 {
     $funcs = \Decoders\decoders();
+    
     return array_key_exists($ext, $funcs)
         ? $funcs[$ext]($content)
         : Either\left('unknown input format ' . $ext . PHP_EOL);
@@ -23,13 +25,14 @@ function decode(string $ext, string $content)
 const ENCODE = 'Converter\encode';
 
 /**
- * @param string $ext
- * @param array  $content
- * @return static
+ * @param string $ext       format of file
+ * @param array  $content   array to convert
+ * @return \Monad\Either
  */
 function encode(string $ext, array $content)
 {
     $funcs = \Encoders\encoders();
+    
     return array_key_exists($ext, $funcs)
         ? $funcs[$ext]($content)
         : Either\left('unknown output format ' . $ext . PHP_EOL);

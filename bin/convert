@@ -1,8 +1,6 @@
 #!/usr/bin/env php
 <?php
-/**
- *  Conversion settings files from one format to another
- */
+
 namespace Convert;
 
 use function \Converter\convert;
@@ -11,12 +9,15 @@ use Monad\Either;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $options = getopt("s:t:o");
+
 if (!isset($options['s']) || !isset($options['t'])) {
     exit('missing parameters. usage convert -s input.file -t output.file [-o]' . PHP_EOL);
 }
 
 $result = convert($options['s'], $options['t'], array_key_exists('o', $options));
+
 if($result instanceof Either\Left) {
     exit($result->extract());
 }
+
 exit(0);
