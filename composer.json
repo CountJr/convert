@@ -21,10 +21,12 @@
     "mikey179/vfsStream": "1.6.3"
   },
   "autoload": {
-    "files": ["src/convert.php",
+    "files": ["src/io.php",
+              "src/encodeDecode.php",
               "src/coders/xml.php",
               "src/coders/yml.php",
-              "src/coders/json.php"
+              "src/coders/json.php",
+              "src/convert.php"
     ]
   },
   "bin": ["bin/convert.php"],

@@ -28,7 +28,7 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
 
     public function testConvert()
     {
-        $this->assertEquals('file extension is missing' . PHP_EOL, \Converter\convert('lalal', 'bububu')->extract());
+        $this->assertEquals('file lalal does not exists' . PHP_EOL, \Converter\convert('lalal', 'bububu')->extract());
         $this->assertEquals(
             'write to file error' . PHP_EOL,
             \Converter\convert(vfsStream::url('temp')
@@ -42,8 +42,8 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
 
     public function testFileExtension()
     {
-        $this->assertInstanceOf(Either\Right::class, \Converter\fileFormat('lala.xml'));
-        $this->assertInstanceOf(Either\Left::class, \Converter\fileFormat('lala'));
+        $this->assertEquals('xml', \Converter\fileFormat('lala.xml'));
+        $this->assertEquals('', \Converter\fileFormat('lala'));
     }
 
     /**
