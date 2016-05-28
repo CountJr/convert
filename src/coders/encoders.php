@@ -2,6 +2,8 @@
 namespace Encoders;
 
 use Symfony\Component\Yaml\Yaml;
+use Functional;
+use Monad\Either;
 
 function encoders()
 {
@@ -14,7 +16,7 @@ function encoders()
          * @return string
          */
         'json' => function (array $arr) {
-            return json_encode($arr, JSON_UNESCAPED_UNICODE);
+            return Either\right(json_encode($arr, JSON_UNESCAPED_UNICODE));
         },
 
         /**
@@ -40,7 +42,7 @@ function encoders()
             );
             $arrayToXml($arr, $xmlData);
 
-            return $xmlData->asXML();
+            return  Either\right($xmlData->asXML());
         },
 
         /**
@@ -51,7 +53,11 @@ function encoders()
          * @return string
          */
         'yml' => function (array $arr) {
-            return Yaml::dump($arr, 2, 2);
+            return \Monad\Either\tryCatch(function ($arr) {
+                return Either\right(Yaml::dump($arr, 2, 2));
+            }, function (\Exception $e) {
+                Either\left('exception throwed ' . $e);
+            }, $arr);
         },
     ];
 }

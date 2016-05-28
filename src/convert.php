@@ -18,11 +18,6 @@ use function Functional\curry;
 
 function convert(string $source, string $target, bool $overwrite = false)
 {
-    /*
-    $funcs = \Decoders\decoders();
-    var_dump(array_key_exists('json', $funcs));
-    */
-    
     $sourceExtension = fileFormat($source);
     $targetExtension = fileFormat($target);
 

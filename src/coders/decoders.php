@@ -2,6 +2,8 @@
 namespace Decoders;
 
 use Symfony\Component\Yaml\Yaml;
+use Functional;
+use Monad\Either;
 
 function decoders()
 {
@@ -14,7 +16,7 @@ function decoders()
          * @return array
          */
         'json' => function (string $text) {
-            return json_decode($text, true);
+            return Either\right(json_decode($text, true));
         },
     
         /**
@@ -33,7 +35,7 @@ function decoders()
                 }
             }
     
-            return $array;
+            return Either\right($array);
         },
     
         /**
@@ -44,7 +46,11 @@ function decoders()
          * @return mixed
          */
         'yml'  => function (string $text) {
-            return Yaml::parse($text);
+            return \Monad\Either\tryCatch(function ($text) {
+                return Either\right(Yaml::parse($text));
+            }, function (\Exception $e) {
+                Either\left('exception throwed ' . $e);
+            }, $text);
         },
     ];
 }

@@ -1,7 +1,7 @@
 <?php
 namespace Converter;
 
-use Functional as f;
+use Functional;
 use Monad\Either;
 use function Functional\curry;
 
@@ -16,7 +16,7 @@ function decode(string $ext, string $content)
 {
     $funcs = \Decoders\decoders();
     return array_key_exists($ext, $funcs)
-        ? \Monad\Either\right($funcs[$ext]($content))
+        ? $funcs[$ext]($content)
         : Either\left('unknown input format ' . $ext . PHP_EOL);
 }
 
@@ -31,6 +31,6 @@ function encode(string $ext, array $content)
 {
     $funcs = \Encoders\encoders();
     return array_key_exists($ext, $funcs)
-        ? \Monad\Either\right($funcs[$ext]($content))
+        ? $funcs[$ext]($content)
         : Either\left('unknown output format ' . $ext . PHP_EOL);
 }
