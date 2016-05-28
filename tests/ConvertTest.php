@@ -62,7 +62,6 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
             ['json', 'conf.json'],
             ['xml', 'conf.xml'],
             ['yml', 'conf.yml'],
-            ['yaml', 'conf.yml']
         ];
     }
 
