@@ -47,45 +47,10 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('xml', \Converter\fileFormat('lala.xml'));
         $this->assertEquals('', \Converter\fileFormat('lala'));
     }
-
-    /**
-     * @dataProvider decodeProvider
-     */
-    public function testDecodeEncode($format, $file)
-    {
-        $fileContents = file_get_contents(vfsStream::url('temp') . DIRECTORY_SEPARATOR . $file);
-        $this->assertEquals($this->arr, \Converter\decode($format, $fileContents)->extract());
-        $this->assertEquals($fileContents, \Converter\encode($format, $this->arr)->extract());
-    }
-
-    public function decodeProvider()
-    {
-        return [
-            ['json', 'conf.json'],
-            ['xml', 'conf.xml'],
-            ['yml', 'conf.yml'],
-        ];
-    }
-
+    
     public function testDecodeEncodeFail()
     {
         $this->assertInstanceOf(Either\Left::class, \Converter\decode('lala', 'bubu'));
         $this->assertInstanceOf(Either\Left::class, \Converter\encode('lala', $this->arr));
-    }
-    
-    public function testYmlExceptions()
-    {
-        $funcs = \Decoders\decoders();
-        try {
-            $this->assertTrue($funcs['yml']('jdshfdks dsjfhds fdhs '));
-        } catch (\Exception $e) {
-            //
-        }
-        $funcs = \Encoders\encoders();
-        try {
-            $this->assertTrue($funcs['yml'](['sdfdsf jdlslfkdjs']));
-        } catch (\Exception $e) {
-            //
-        }
     }
 }

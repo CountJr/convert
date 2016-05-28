@@ -56,7 +56,7 @@ function encoders()
             return \Functional\tryCatch(function ($arr) {
                 return Either\right(Yaml::dump($arr, 2, 2));
             }, function (\Exception $e) {
-                Either\left('exception throwed ' . $e);
+                return Either\left('incorect data' . PHP_EOL);
             }, $arr);
         },
     ];
