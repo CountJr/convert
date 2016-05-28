@@ -53,7 +53,7 @@ function encoders()
          * @return string
          */
         'yml' => function (array $arr) {
-            return \Monad\Either\tryCatch(function ($arr) {
+            return \Functional\tryCatch(function ($arr) {
                 return Either\right(Yaml::dump($arr, 2, 2));
             }, function (\Exception $e) {
                 Either\left('exception throwed ' . $e);

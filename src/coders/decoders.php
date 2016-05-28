@@ -46,7 +46,7 @@ function decoders()
          * @return mixed
          */
         'yml'  => function (string $text) {
-            return \Monad\Either\tryCatch(function ($text) {
+            return \Functional\tryCatch(function ($text) {
                 return Either\right(Yaml::parse($text));
             }, function (\Exception $e) {
                 Either\left('exception throwed ' . $e);
