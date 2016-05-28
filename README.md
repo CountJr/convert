@@ -6,16 +6,34 @@
 [![Coverage Status](https://coveralls.io/repos/github/CountJr/convert/badge.svg?branch=master)](https://coveralls.io/github/CountJr/convert?branch=master)
 
 
-## Install
+Installation / Usage
+--------------------
 
-git clone https://github.com/CountJr/convert
+1. Download and install Composer by following the [official instructions](https://getcomposer.org/download/).
+2. Create a composer.json defining your dependencies.
 
-## Usage
+    ``` json
+    "require": {
+        "CountJr/convert": "dev-master"
+      },
+      "repositories": [
+        {
+          "type": "vcs",
+          "url": "https://github.com/CountJr/convert"
+        }
+      ],
+    ```
 
-./convert -s input.file -t output.file [-o]
+3. Run Composer: `php composer.phar install`
+4. Run Converter: `php composer.phar exec convert -s Source.file -t Target.file [-o]`
 
-    -o - overwrite target file if exists (optional)
+Global installation of Composer (manual)
+----------------------------------------
 
-## Requirements
+Follow instructions [in the documentation](https://getcomposer.org/doc/00-intro.md#globally)
+
+
+Requirements
+------------
 
 PHP 7.0
