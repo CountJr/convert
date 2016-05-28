@@ -19,11 +19,13 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
                       "server2" => "host2",
                       "server3" => "host3"]
     ];
+    protected $json;
 
     protected function setUp()
     {
         $this->rootfs = vfsStream::setup('temp');
         vfsStream::copyFromFileSystem('./tests/testfiles', $this->rootfs);
+        $this->json = file_get_contents(vfsStream::url('temp/conf.json'));
     }
 
     public function testConvert()
@@ -69,5 +71,23 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(Either\Left::class, \Converter\decode('lala', 'bubu'));
         $this->assertInstanceOf(Either\Left::class, \Converter\encode('lala', $this->arr));
+    }
+    
+    public function testYmlExceptions()
+    {
+        $funcs = \Decoders\decoders();
+        try {
+            $this->assertTrue($funcs['yml']($this->json));
+            $this->fail('\Exception');
+        } catch (\Exception $e) {
+            //
+        }
+        $funcs = \Encoders\encoders();
+        try {
+            $this->assertTrue($funcs['yml']($this->arr));
+            $this->fail('\Exception');
+        } catch (\Exception $e) {
+            //
+        }
     }
 }
