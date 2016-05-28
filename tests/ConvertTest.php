@@ -77,13 +77,13 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
     {
         $funcs = \Decoders\decoders();
         try {
-            $funcs['yml']('jdshfdks dsjfhds fdhs ');
+            $this->assertTrue($funcs['yml']('jdshfdks dsjfhds fdhs '));
         } catch (\Exception $e) {
             //
         }
         $funcs = \Encoders\encoders();
         try {
-            $funcs['yml'](['sdfdsf jdlslfkdjs']);
+            $this->assertTrue($funcs['yml'](['sdfdsf jdlslfkdjs']));
         } catch (\Exception $e) {
             //
         }
