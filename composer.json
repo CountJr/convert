@@ -29,7 +29,7 @@
               "src/convert.php"
     ]
   },
-  "bin": ["bin/convert.php"],
+  "bin": "convert",
   "scripts": {
     "test": "vendor/bin/phpunit",
     "beauty": "vendor/bin/phpcbf --standard=PSR2 src bin tests",
