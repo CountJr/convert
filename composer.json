@@ -25,9 +25,6 @@
               "src/encodeDecode.php",
               "src/coders/decoders.php",
               "src/coders/encoders.php",
-              "src/coders/xml.php",
-              "src/coders/yml.php",
-              "src/coders/json.php",
               "src/convert.php"
     ]
   },
