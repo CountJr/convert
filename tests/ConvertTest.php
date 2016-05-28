@@ -77,15 +77,15 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
     {
         $funcs = \Decoders\decoders();
         try {
-            $this->assertTrue($funcs['yml']($this->json));
-            $this->fail('\Exception');
+            $this->assertTrue($funcs['yml']('jdshfdks dsjfhds fdhs '));
+            //$this->fail('\Exception');
         } catch (\Exception $e) {
             //
         }
         $funcs = \Encoders\encoders();
         try {
-            $this->assertTrue($funcs['yml']($this->arr));
-            $this->fail('\Exception');
+            $this->assertTrue($funcs['yml'](['sdfdsf jdlslfkdjs']));
+            //$this->fail('\Exception');
         } catch (\Exception $e) {
             //
         }
