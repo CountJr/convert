@@ -17,7 +17,7 @@ function decode(string $ext, string $content)
 {
     $funcs = \Decoders\decoders();
     
-    return array_key_exists($ext, $funcs)
+    return isCodecExists($ext, $funcs)
         ? $funcs[$ext]($content)
         : Either\left('unknown input format ' . $ext . PHP_EOL);
 }
@@ -33,7 +33,12 @@ function encode(string $ext, array $content)
 {
     $funcs = \Encoders\encoders();
     
-    return array_key_exists($ext, $funcs)
+    return isCodecExists($ext, $funcs)
         ? $funcs[$ext]($content)
         : Either\left('unknown output format ' . $ext . PHP_EOL);
+}
+
+function isCodecExists(string $extension, array $functions)
+{
+    return array_key_exists($extension, $functions);
 }
