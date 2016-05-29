@@ -1,9 +1,9 @@
 <?php
 namespace Converter;
 
-use Functional as f;
-use Monad\Either;
 use function Functional\curry;
+use function Monad\Either\left as left;
+use function Monad\Either\right as right;
 
 /**
  * @param string $fileName      file name
@@ -21,8 +21,8 @@ function fileFormat(string $fileName)
 function fileRead($fileName)
 {
     return file_exists($fileName)
-        ? Either\Right::of(file_get_contents($fileName))
-        : Either\Left::of("file {$fileName} does not exists" . PHP_EOL);
+        ? right(file_get_contents($fileName))
+        : left("file {$fileName} does not exists" . PHP_EOL);
 }
 
 const WRITE = 'Converter\fileWrite';
@@ -38,6 +38,6 @@ function fileWrite(string $fileName, bool $overwrite, string $content)
     $return = !file_exists($fileName) || $overwrite ? file_put_contents($fileName, $content) : false;
     
     return  $return !== false
-        ? Either\right(true)
-        : Either\left('write to file error' . PHP_EOL);
+        ? right(true)
+        : left('write to file error' . PHP_EOL);
 }

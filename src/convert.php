@@ -2,7 +2,6 @@
 
 namespace Converter;
 
-use Monad\Either;
 use function Functional\curry;
 
 /**

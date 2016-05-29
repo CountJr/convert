@@ -2,8 +2,8 @@
 namespace Decoders;
 
 use Symfony\Component\Yaml\Yaml;
-use Functional;
-use Monad\Either;
+use function Monad\Either\left as left;
+use function Monad\Either\right as right;
 
 function decoders()
 {
@@ -19,8 +19,8 @@ function decoders()
         $return = json_decode($text, true);
         
         return !json_last_error()
-            ? Either\right($return)
-            : Either\left('incorect input file' . PHP_EOL);
+            ? right($return)
+            : left('incorect input file' . PHP_EOL);
     };
 
     /**
@@ -32,7 +32,7 @@ function decoders()
         libxml_use_internal_errors(true);
         $xml = simplexml_load_string($text, 'SimpleXMLElement', LIBXML_NOCDATA);
         if (libxml_get_errors()) {
-            return Either\left('incorect input file' . PHP_EOL);
+            return left('incorect input file' . PHP_EOL);
         }
         
         $array = json_decode(json_encode($xml), true);
@@ -43,7 +43,7 @@ function decoders()
             }
         }
         
-        return Either\right($array);
+        return right($array);
     };
 
     /**
@@ -53,9 +53,9 @@ function decoders()
     $decoders['yml']  = function (string $text) {
         
         return \Functional\tryCatch(function ($text) {
-            return Either\right(Yaml::parse($text));
+            return right(Yaml::parse($text));
         }, function (\Exception $e) {
-            return Either\left('incorect input file' . PHP_EOL);
+            return left('incorect input file' . PHP_EOL);
         }, $text);
     };
     
