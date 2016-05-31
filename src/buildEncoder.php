@@ -6,6 +6,11 @@ use function Functional\curry;
 use function Monad\Either\left as left;
 use function Monad\Either\right as right;
 
+/**
+ * @param string        $target
+ * @param callable|null $function
+ * @return \Closure
+ */
 function buildEncodeFunction(string $target, callable $function = null)
 {
     return !is_null($function)
