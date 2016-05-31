@@ -6,6 +6,13 @@ use function Functional\curry;
 use function Monad\Either\left as left;
 use function Monad\Either\right as right;
 
+function buildEncodeFunction(string $target, callable $function = null)
+{
+    return !is_null($function)
+        ? makeEncodeFunction($function)
+        : getEncodeFunction($target);
+}
+
 /**
  * buils custom encoder
  *

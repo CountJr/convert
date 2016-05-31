@@ -74,7 +74,8 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
 
         $converter = buildConvert($decodeFunction);
         
-        $this->assertEquals('unknown output format ' . PHP_EOL, 
+        $this->assertEquals(
+            'unknown output format ' . PHP_EOL,
             $converter($this->rootfs->url() . '/in',
                 $this->rootfs->url() . '/out',
                 true
@@ -83,7 +84,8 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
 
         $converter = buildConvert(null, $encodeFunction);
 
-        $this->assertEquals('unknown input format ' . PHP_EOL,
+        $this->assertEquals(
+            'unknown input format ' . PHP_EOL,
             $converter($this->rootfs->url() . '/in',
                 $this->rootfs->url() . '/out',
                 true

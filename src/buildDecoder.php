@@ -7,6 +7,18 @@ use function Monad\Either\left as left;
 use function Monad\Either\right as right;
 
 /**
+ * @param string        $source
+ * @param callable|null $function
+ * @return \Closure
+ */
+function buildDecodeFunction(string $source, callable $function = null)
+{
+    return !is_null($function)
+        ? makeDecodeFunction($function)
+        : getDecodeFunction($source);
+}
+
+/**
  * build custom decoder
  *
  * @param callable $function

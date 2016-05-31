@@ -15,23 +15,25 @@ use function Monad\Either\left as left;
  */
 function buildConvert(callable $decodeFunction = null, callable $encodeFunction = null)
 {
+    
+    
+    /**
+     * @param string $source
+     * @param string $target
+     * @param bool   $overwrite
+     * @return mixed
+     */
     return function (string $source, string $target, bool $overwrite = false)
  use ($decodeFunction, $encodeFunction) {
         
-        $decodeFunction = !is_null($decodeFunction)
-            ? makeDecodeFunction($decodeFunction)
-            : getDecodeFunction($source);
-
+        $decodeFunction = buildDecodeFunction($source, $decodeFunction);
+        $encodeFunction = buildEncodeFunction($target, $encodeFunction);
         
-        $encodeFunction = !is_null($encodeFunction)
-            ? makeEncodeFunction($encodeFunction)
-            : getEncodeFunction($target);
-        
-        $result = fileRead($source)
+        return fileRead($source)
                     ->bind(curry(CONVERTDATA, [$decodeFunction, $encodeFunction]))
-                    ->bind(curry(WRITE, [$target, $overwrite]));
-
-        return $result->either(RETURNERROR, RETURNZERO);
+                    ->bind(curry(WRITE, [$target, $overwrite]))
+                    ->either(RETURNERROR, RETURNZERO);
+        
     };
 }
 
