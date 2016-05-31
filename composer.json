@@ -22,7 +22,9 @@
   },
   "autoload": {
     "files": ["src/io.php",
-              "src/encodeDecode.php",
+              "src/buildDecoder.php",
+              "src/buildEncoder.php",
+              "src/isCodecExists.php",
               "src/coders/decoders.php",
               "src/coders/encoders.php",
               "src/convert.php"

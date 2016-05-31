@@ -3,7 +3,7 @@
 
 namespace Convert;
 
-use function \Converter\convert;
+use function \Converter\buildConvert;
 use Monad\Either;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -14,10 +14,12 @@ if (!isset($options['s']) || !isset($options['t'])) {
     exit('missing parameters. usage convert -s input.file -t output.file [-o]' . PHP_EOL);
 }
 
+$converter = buildConvert();
+
 $result = convert($options['s'], $options['t'], array_key_exists('o', $options));
 
-if($result instanceof Either\Left) {
-    exit($result->extract());
+if(!$result) {
+    exit($result);
 }
 
 exit(0);

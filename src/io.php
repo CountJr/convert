@@ -11,18 +11,26 @@ use function Monad\Either\right as right;
  */
 function fileFormat(string $fileName)
 {
-    return pathinfo($fileName, PATHINFO_EXTENSION);
+    return strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 }
 
 /**
  * @param $fileName     file name
  * @return \Monad\Either
  */
-function fileRead($fileName)
+function fileRead(string $fileName)
 {
-    return file_exists($fileName)
-        ? right(file_get_contents($fileName))
-        : left("file {$fileName} does not exists" . PHP_EOL);
+
+    if (!is_file($fileName)) {
+        return left("file {$fileName} does not exists" . PHP_EOL);
+    }
+    
+    if (!is_readable($fileName)) {
+        return left("file {$fileName} is not readable" . PHP_EOL);
+    }
+
+    return right(file_get_contents($fileName));
+    
 }
 
 const WRITE = 'Converter\fileWrite';
@@ -35,9 +43,16 @@ const WRITE = 'Converter\fileWrite';
  */
 function fileWrite(string $fileName, bool $overwrite, string $content)
 {
-    $return = !file_exists($fileName) || $overwrite ? file_put_contents($fileName, $content) : false;
     
-    return  $return !== false
-        ? right(true)
-        : left('write to file error' . PHP_EOL);
+    if (file_exists($fileName) && !$overwrite) {
+        return left('can\'t overwrite existing file' . PHP_EOL);
+    }
+    
+    if (file_exists($fileName) && !is_writable($fileName)) {
+        return left("file {$fileName} is not writable" . PHP_EOL);
+    }
+    
+    file_put_contents($fileName, $content);
+    
+    return right(true);
 }

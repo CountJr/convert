@@ -12,7 +12,7 @@ function encoders()
     
     /**
      * @param array $arr
-     * @return Either\Right
+     * @return \Monad\Either
      */
     $encoders['json'] = function (array $arr) {
 

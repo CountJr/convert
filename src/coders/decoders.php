@@ -1,4 +1,5 @@
 <?php
+
 namespace Decoders;
 
 use Symfony\Component\Yaml\Yaml;

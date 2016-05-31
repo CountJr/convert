@@ -2,21 +2,38 @@
 
 namespace Converter;
 
+use Monad\Either;
 use function Functional\curry;
 
-/**
- * @param string $source        source file name
- * @param string $target        target file name
- * @param bool   $overwrite     overwrite target file if exists
- * @return \Monad\Either
- */
-function convert(string $source, string $target, bool $overwrite = false)
+function buildConvert(array $functions = [])
 {
-    $sourceExtension = fileFormat($source);
-    $targetExtension = fileFormat($target);
+    
+    return function (string $source, string $target, bool $overwrite = false)
+ use ($functions) {
+        
+        $decodeFunction = isset($functions[0])
+            ? makeDecodeFunction($functions[0])
+            : getDecodeFunction($source);
 
-    return fileRead($source)
-        ->bind(curry(DECODE, [$sourceExtension]))
-        ->bind(curry(ENCODE, [$targetExtension]))
-        ->bind(curry(WRITE, [$target, $overwrite]));
+        $encodeFunction = isset($functions[1])
+            ? makeEncodeFunction($functions[1])
+            : getEncodeFunction($target);
+        
+        $result = fileRead($source)
+                    ->bind(curry(CONVERTDATA, [$decodeFunction, $encodeFunction]))
+                    ->bind(curry(WRITE, [$target, $overwrite]));
+
+        return $result instanceof Either\Left
+            ? $result->extract()
+            : 0;
+    };
+}
+
+
+const CONVERTDATA = 'Converter\convertData';
+
+function convertData(callable $decodeFunction, callable $encodeFunction, $data)
+{
+    return  $decodeFunction($data)
+                ->bind(curry($encodeFunction));
 }
