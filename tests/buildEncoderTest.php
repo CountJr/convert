@@ -20,7 +20,7 @@ class BuildEncoderTest extends \PHPUnit_Framework_TestCase
         $array = ['sdd', 'dfdfd', 'wwe2', '98er', 'sdmmm'];
         $encoder = makeEncodeFunction($function);
 
-        $this->assertEquals($string, $encoder($array));
+        $this->assertEquals($string, $encoder($array)->extract());
 
         $function = function ($array) {
             throw new \Exception('test');

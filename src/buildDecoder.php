@@ -6,13 +6,19 @@ use function Functional\curry;
 use function Monad\Either\left as left;
 use function Monad\Either\right as right;
 
+/**
+ * build custom decoder
+ *
+ * @param callable $function
+ * @return \Closure
+ */
 function makeDecodeFunction(callable $function)
 {
 
     return function (string $text) use ($function) {
 
         return \Functional\tryCatch(function ($text) use ($function) {
-            return $function($text);
+            return right($function($text));
         }, function (\Exception $e) {
             return left('incorrect input file' . PHP_EOL);
         }, $text);
@@ -21,6 +27,12 @@ function makeDecodeFunction(callable $function)
 
 }
 
+/**
+ * get build in decoder
+ *
+ * @param string $source
+ * @return \Closure
+ */
 function getDecodeFunction(string $source)
 {
 
@@ -29,6 +41,8 @@ function getDecodeFunction(string $source)
 
     return isCodecExists($extension, $funcs)
         ? $funcs[$extension]
-        : left('unknown input format ' . $extension . PHP_EOL);
+        : function (string $x) use ($extension) {
+            return left('unknown input format ' . $extension . PHP_EOL);
+        };
 
 }

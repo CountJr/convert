@@ -16,7 +16,7 @@ if (!isset($options['s']) || !isset($options['t'])) {
 
 $converter = buildConvert();
 
-$result = convert($options['s'], $options['t'], array_key_exists('o', $options));
+$result = $converter($options['s'], $options['t'], array_key_exists('o', $options));
 
 if(!$result) {
     exit($result);

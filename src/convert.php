@@ -4,36 +4,74 @@ namespace Converter;
 
 use Monad\Either;
 use function Functional\curry;
+use function Monad\Either\left as left;
 
-function buildConvert(array $functions = [])
+/**
+ * returns callable converter with optional custom functions
+ *
+ * @param callable|null $decodeFunction
+ * @param callable|null $encodeFunction
+ * @return \Closure
+ */
+function buildConvert(callable $decodeFunction = null, callable $encodeFunction = null)
 {
-    
     return function (string $source, string $target, bool $overwrite = false)
- use ($functions) {
+ use ($decodeFunction, $encodeFunction) {
         
-        $decodeFunction = isset($functions[0])
-            ? makeDecodeFunction($functions[0])
+        $decodeFunction = !is_null($decodeFunction)
+            ? makeDecodeFunction($decodeFunction)
             : getDecodeFunction($source);
 
-        $encodeFunction = isset($functions[1])
-            ? makeEncodeFunction($functions[1])
+        
+        $encodeFunction = !is_null($encodeFunction)
+            ? makeEncodeFunction($encodeFunction)
             : getEncodeFunction($target);
         
         $result = fileRead($source)
                     ->bind(curry(CONVERTDATA, [$decodeFunction, $encodeFunction]))
                     ->bind(curry(WRITE, [$target, $overwrite]));
 
-        return $result instanceof Either\Left
-            ? $result->extract()
-            : 0;
+        return $result->either(RETURNERROR, RETURNZERO);
     };
 }
 
 
 const CONVERTDATA = 'Converter\convertData';
 
-function convertData(callable $decodeFunction, callable $encodeFunction, $data)
-{
+/**
+ * @param callable $decodeFunction
+ * @param callable $encodeFunction
+ * @param          $data
+ * @return mixed
+ */
+function convertData(
+    callable $decodeFunction,
+    callable $encodeFunction,
+    $data
+) {
+
     return  $decodeFunction($data)
                 ->bind(curry($encodeFunction));
+}
+
+const RETURNERROR = 'Converter\returnError';
+
+/**
+ * @param $data
+ * @return string
+ */
+function returnError($data)
+{
+    return $data;
+}
+
+const RETURNZERO = 'Converter\returnZero';
+
+/**
+ * @param $data
+ * @return int
+ */
+function returnZero($data)
+{
+    return 0;
 }

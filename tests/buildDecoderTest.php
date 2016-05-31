@@ -20,7 +20,7 @@ class BuildDecoderTest extends \PHPUnit_Framework_TestCase
         $array = ['sdd', 'dfdfd', 'wwe2', '98er', 'sdmmm'];
         $decoder = makeDecodeFunction($function);
         
-        $this->assertEquals($array, $decoder($string));
+        $this->assertEquals($array, $decoder($string)->extract());
             
         $function = function ($string) {
             throw new \Exception('test');
