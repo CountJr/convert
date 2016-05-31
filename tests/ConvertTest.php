@@ -71,6 +71,24 @@ class ConvertTest extends \PHPUnit_Framework_TestCase
             $targetString,
             file_get_contents($this->rootfs->url() . '/out')
         );
+
+        $converter = buildConvert($decodeFunction);
+        
+        $this->assertEquals('unknown output format ' . PHP_EOL, 
+            $converter($this->rootfs->url() . '/in',
+                $this->rootfs->url() . '/out',
+                true
+            )
+        );
+
+        $converter = buildConvert(null, $encodeFunction);
+
+        $this->assertEquals('unknown input format ' . PHP_EOL,
+            $converter($this->rootfs->url() . '/in',
+                $this->rootfs->url() . '/out',
+                true
+            )
+        );
         
     }
 }
