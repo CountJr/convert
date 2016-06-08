@@ -6,16 +6,26 @@ namespace Convert;
 use function \Converter\buildConvert;
 use Monad\Either;
 
+const EXIT_ERROR_CODE = 1;
+const EXIT_SUCCESS_CODE = 0;
+
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $options = getopt("s:t:o");
 
 if (!isset($options['s']) || !isset($options['t'])) {
-    exit('missing parameters. usage convert -s input.file -t output.file [-o]' . PHP_EOL);
+    exit('missing parameters. use convert -s input.file -t output.file [-o]' . PHP_EOL);
 }
 
 $converter = buildConvert();
 
 $result = $converter($options['s'], $options['t'], array_key_exists('o', $options));
 
-$result ? exit($result) : exit(0);
+if ($result) {
+    fprintf(STDERR, $result);
+    exit(EXIT_ERROR_CODE);
+}
+
+exit(EXIT_SUCCESS_CODE);
+

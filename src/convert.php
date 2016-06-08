@@ -46,11 +46,8 @@ const CONVERTDATA = 'Converter\convertData';
  * @param          $data
  * @return mixed
  */
-function convertData(
-    callable $decodeFunction,
-    callable $encodeFunction,
-    $data
-) {
+function convertData(callable $decodeFunction, callable $encodeFunction, $data)
+{
 
     return  $decodeFunction($data)
                 ->bind(curry($encodeFunction));

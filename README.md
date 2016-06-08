@@ -37,10 +37,13 @@ Library usage
 -------------
 
 Build convert function:
-`$convert = \Converter\buildConvert([array (callable $decodeFunction, callable $encodeFunction)])`
+
+`$convert = \Converter\buildConvert([array ("decode" => callable $decodeFunction, "decode" => callable $encodeFunction)])`
+
 $decodeFunction and $encodeFunction are optional.
 
 use convert function
+
 `$convert( string $sourceFileName, string $targetFileName, [bool $overwrite])`
 
 Requirements
